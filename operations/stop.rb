@@ -2,11 +2,14 @@
 
 module Operations
   class Stop < Operations::BaseOperation
+
     def perform
-      return success if send_request.success
+      return success if send_request.success?
 
       error(response: send_request)
     end
+
+    private
 
     def success
       @bot.api.send_message(
@@ -18,20 +21,14 @@ module Operations
     def error(response:)
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: ''
+        text: 'Omg! This does not work.'
       )
     end
-
-    private
 
     def send_request
       Faraday.post(
         @server_request_url,
-        {
-          first_name: @message.from.first_name,
-          last_name: @message.from.last_name,
-          chat_id: @message.chat.id
-        }
+        { chat_id: @message.chat.id }
       )
     end
   end

@@ -11,6 +11,11 @@ Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
       Operations::Start.new(bot: bot, message: message).perform
     when '/stop'
       Operations::Stop.new(bot: bot, message: message).perform
+    else
+      bot.api.send_message(
+        chat_id: message.chat.id,
+        text: 'Sorry, I dont understand what you mean...'
+      )
     end
   end
 end
