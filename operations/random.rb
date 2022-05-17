@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 module Operations
-  class Stop < Operations::BaseOperation
+  class Random < Operations::BaseOperation
     def perform
       answer = send_request
-      return success if answer.success?
+      return success(answer: answer) if answer.success?
 
       error(errors: JSON.parse(answer.body)['errors'].first)
     end
 
     private
 
-    def success
+    def success(answer:)
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: "Bye, #{@message.from.first_name}"
+        text: "Hi! #{@message.from.first_name}"
       )
     end
 
@@ -26,7 +26,7 @@ module Operations
     end
 
     def send_request
-      Faraday.post(
+      Faraday.get(
         @server_request_url,
         { chat_id: @message.chat.id }
       )

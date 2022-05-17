@@ -2,7 +2,6 @@
 
 module Operations
   class Start < Operations::BaseOperation
-
     def perform
       answer = send_request
       return success if answer.success?
