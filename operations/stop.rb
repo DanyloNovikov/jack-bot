@@ -4,9 +4,10 @@ module Operations
   class Stop < Operations::BaseOperation
 
     def perform
-      return success if send_request.success?
+      answer = send_request
+      return success if answer.success?
 
-      error(response: send_request)
+      error(errors: JSON.parse(answer.body)['errors'].first)
     end
 
     private
@@ -18,10 +19,10 @@ module Operations
       )
     end
 
-    def error(response:)
+    def error(errors:)
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: 'Omg! This does not work.'
+        text: errors.values.join('\n')
       )
     end
 

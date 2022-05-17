@@ -1,11 +1,13 @@
 # frozen_string_literal: true
+
 module Operations
   class Start < Operations::BaseOperation
 
     def perform
-      return success if send_request.success?
+      answer = send_request
+      return success if answer.success?
 
-      error(response: send_request)
+      error(errors: JSON.parse(answer.body)['errors'].first)
     end
 
     private
@@ -13,27 +15,21 @@ module Operations
     def success
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: "Hello, #{@message.from.first_name}"
+        text: "Hi! #{@message.from.first_name}"
       )
     end
 
-    def error(response:)
+    def error(errors:)
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: 'Omg! This does not work.'
+        text: errors.values.join('\n')
       )
     end
 
     def send_request
       Faraday.post(
         @server_request_url,
-        {
-          first_name: @message.from.first_name,
-          last_name: @message.from.last_name,
-          external_uid: @message.from.id,
-          language_code: @message.from.language_code,
-          chat_id: @message.chat.id
-        }
+        { chat_id: @message.chat.id }
       )
     end
   end
