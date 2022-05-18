@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'base_operation'
+
 module Operations
   class Start < Operations::BaseOperation
     def perform

@@ -2,7 +2,12 @@
 
 require 'telegram/bot'
 require 'dotenv/load'
+require 'active_record'
+require 'yaml'
+
 Dir['operations/*.rb'].each { |file| require_relative file }
+configuration = YAML.safe_load(IO.read('config/database.yml'))
+ActiveRecord::Base.establish_connection(configuration)
 
 Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
   bot.listen do |message|

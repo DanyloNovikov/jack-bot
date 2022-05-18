@@ -1,0 +1,30 @@
+version: "3.9"
+
+volumes:
+  jack-bot-source-sync:
+    external: true
+
+services:
+  web:
+    tty: true
+    stdin_open: true
+    build: .
+    command: bash -c "bundle && ruby core.rb"
+    volumes:
+      - jack-bot-source-sync:/app
+    env_file:
+      - docker/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: postgres:latest
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    env_file:
+      - docker/.env
+    ports:
+      - "5432:5432"

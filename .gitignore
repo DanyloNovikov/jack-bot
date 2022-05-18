@@ -1,3 +1,6 @@
 .git
+docker/.env
 .env
 .idea
+.docker-sync
+tmp

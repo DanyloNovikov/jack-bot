@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'pry'
+
+require_relative 'base_operation'
 
 module Operations
   class Random < Operations::BaseOperation
@@ -65,12 +66,12 @@ module Operations
         ingredients: preparation_data(collection: answer, search: 'strIngredient'),
         measures: preparation_data(collection: answer, search: 'strMeasure')
       )
-      text = "*Drink:* #{answer['strDrink']}\n" +
-             "**#{answer['strAlcoholic']}**\n" +
+      text = "*Drink:* #{answer['strDrink']}\n" \
+             "**#{answer['strAlcoholic']}**\n" \
              "Glass: #{answer['strGlass']}\n\n"
-        ingredients.each do |ingredient|
-          text  += (ingredient.join(' ') + "\n")
-        end
+      ingredients.each do |ingredient|
+        text += "#{ingredient.join(' ')}\n"
+      end
       text += "\nInstruction: #{answer['strInstructions']}\n"
     end
   end

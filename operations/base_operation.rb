@@ -14,6 +14,8 @@ module Operations
       raise 'must be implement'
     end
 
+    private
+
     def success
       raise 'must be implement'
     end
@@ -21,8 +23,6 @@ module Operations
     def error
       raise 'must be implement'
     end
-
-    private
 
     def set_server_request_url
       ENV['BASE_SERVER'] + self.class.to_s.split(':').last.downcase
