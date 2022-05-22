@@ -8,27 +8,20 @@ require 'dotenv/load'
 
 config = AppConfigurator.new
 config.configure
-Dir['./operations/*.rb'].each { |file| require_relative "../#{file}" }
+Dir['./controllers/*.rb'].each { |file| require_relative "../#{file}" }
 
 logger = config.get_logger
 logger.debug 'Starting telegram bot'
 
 Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
+  bot.logger.info('Bot has been started')
   bot.listen do |message|
-    logger.debug "@#{message.from.username}: #{message.text}"
-
-    case message.text
-    when '/start'
-      Operations::Start.new(bot: bot, message: message).perform
-    when '/stop'
-      Operations::Stop.new(bot: bot, message: message).perform
-    when '/random'
-      Operations::Random.new(bot: bot, message: message).perform
+    if message.instance_of?(Telegram::Bot::Types::CallbackQuery)
+      Controllers::CallbackController.new(bot: bot, message: message).perform
+      logger.debug "@#{message.from.username}: #{message.data}"
     else
-      bot.api.send_message(
-        chat_id: message.chat.id,
-        text: 'Sorry, I dont understand what you mean...'
-      )
+      Controllers::MessageController.new(bot: bot, message: message).perform
+      logger.debug "@#{message.from.username}: #{message.text}"
     end
   end
 end

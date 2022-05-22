@@ -15,20 +15,20 @@ module Operations
 
     def success
       @bot.api.send_message(
-        chat_id: @message.chat.id,
+        chat_id: @message.from.id,
         text: "Bye, #{@message.from.first_name}"
       )
     end
 
     def error(errors:)
       @bot.api.send_message(
-        chat_id: @message.chat.id,
+        chat_id: @message.from.id,
         text: errors.full_messages.join('\n')
       )
     end
 
     def user
-      @user ||= User.find_by(chat_id: @message.chat.id)
+      @user ||= User.find_by(external_uid: @message.from.id)
     end
   end
 end

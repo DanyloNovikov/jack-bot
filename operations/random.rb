@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'base_operation'
+require 'telegram/bot'
 
 module Operations
   class Random < Operations::BaseOperation
@@ -15,19 +16,26 @@ module Operations
 
     def success(answer:)
       @bot.api.sendPhoto(
-        chat_id: @message.chat.id,
+        chat_id: @message.from.id,
         photo: answer['strDrinkThumb']
       )
 
       @bot.api.send_message(
-        chat_id: @message.chat.id,
-        text: text_for_message(answer: answer)
+        chat_id: @message.from.id,
+        text: text_for_message(answer: answer),
+        photo: answer['strDrinkThumb'],
+        reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(
+          inline_keyboard: Telegram::Bot::Types::InlineKeyboardButton.new(
+            text: 'Give me cocktail',
+            callback_data: '/random'
+          )
+        )
       )
     end
 
     def error(errors:)
       @bot.api.send_message(
-        chat_id: @message.chat.id,
+        chat_id: @message.from.id,
         text: errors.values.join('\n')
       )
     end
@@ -66,7 +74,7 @@ module Operations
         ingredients: preparation_data(collection: answer, search: 'strIngredient'),
         measures: preparation_data(collection: answer, search: 'strMeasure')
       )
-      text = "*Drink:* #{answer['strDrink']}\n" \
+      text = "Drink: #{answer['strDrink']}\n" \
              "**#{answer['strAlcoholic']}**\n" \
              "Glass: #{answer['strGlass']}\n\n"
       ingredients.each do |ingredient|
