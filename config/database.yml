@@ -1,4 +1,0 @@
-url: postgres://postgres:postgres@db/jack_bot
-adapter: postgresql
-encoding: unicode
-pool: 5

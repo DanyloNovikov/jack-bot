@@ -1,13 +1,17 @@
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require 'telegram/bot'
-require 'dotenv/load'
-require 'active_record'
-require 'yaml'
 
+require './lib/app_configurator'
+require 'dotenv/load'
+
+config = AppConfigurator.new
+config.configure
 Dir['operations/*.rb'].each { |file| require_relative file }
-configuration = YAML.safe_load(IO.read('config/database.yml'))
-ActiveRecord::Base.establish_connection(configuration)
+
+logger = config.get_logger
+logger.debug 'Starting telegram bot'
 
 Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
   bot.listen do |message|

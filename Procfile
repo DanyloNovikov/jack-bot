@@ -1,1 +1,1 @@
-bot: ruby core.rb
+bot: bin/bot

@@ -71,7 +71,6 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
 
 PLATFORMS
-  ruby
   x86_64-darwin-21
   x86_64-linux
 
@@ -83,8 +82,5 @@ DEPENDENCIES
   rake
   telegram-bot-ruby
 
-RUBY VERSION
-   ruby 2.7.4p191
-
 BUNDLED WITH
-   2.3.13
+   2.3.14

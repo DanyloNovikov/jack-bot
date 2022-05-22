@@ -1,6 +1,6 @@
-.git
-docker/.env
+secrets.yml
+*.log
 .env
 .idea
-.docker-sync
 tmp
+.docker-sync
