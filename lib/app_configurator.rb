@@ -9,7 +9,7 @@ class AppConfigurator
     setup_database
   end
 
-  def get_logger
+  def logger
     Logger.new($stdout, Logger::DEBUG)
   end
 
