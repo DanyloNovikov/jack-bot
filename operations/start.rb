@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'base_operation'
+Dir['./models/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Operations
   class Start < Operations::BaseOperation
     def perform
-      answer = send_request
-      return success if answer.success?
+      return success if user.save
 
-      error(errors: JSON.parse(answer.body)['errors'].first)
+      error(errors: user.errors)
     end
 
     private
@@ -23,15 +23,12 @@ module Operations
     def error(errors:)
       @bot.api.send_message(
         chat_id: @message.chat.id,
-        text: errors.values.join('\n')
+        text: errors.full_messages.join('\n')
       )
     end
 
-    def send_request
-      Faraday.post(
-        @server_request_url,
-        { chat_id: @message.chat.id }
-      )
+    def user
+      @user ||= User.create(chat_id: @message.chat.id)
     end
   end
 end
