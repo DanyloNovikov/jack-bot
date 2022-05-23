@@ -42,7 +42,7 @@ module Operations
 
     def send_request
       Faraday.get(
-        ENV['RAPID_URL'],
+        'https://the-cocktail-db.p.rapidapi.com/random.php',
         {},
         {
           'X-RapidAPI-Host' => ENV['RAPID_HOST'],
