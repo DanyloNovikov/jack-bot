@@ -21,7 +21,7 @@ module Services
     def answer
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: "#{@message.from.first_name}, you are not authorized please press start."
+        text: "#{@message.from.first_name}, you are not authorized please entry 'start'."
       )
     end
   end
