@@ -27,7 +27,7 @@ module Operations
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(
           inline_keyboard: Telegram::Bot::Types::InlineKeyboardButton.new(
             text: 'Give me cocktail',
-            callback_data: '/random'
+            callback_data: 'random'
           )
         )
       )

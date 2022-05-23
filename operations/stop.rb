@@ -6,9 +6,9 @@ Dir['./models/*.rb'].each { |file| require_relative "../#{file}" }
 module Operations
   class Stop < Operations::BaseOperation
     def perform
-      return success if user.delete
+      return success if @current_user.delete
 
-      error(errors: user.errors)
+      error(errors: @current_user.errors)
     end
 
     private
@@ -16,19 +16,20 @@ module Operations
     def success
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: "Bye, #{@message.from.first_name}"
+        text: "Bye, #{@message.from.first_name}",
+        reply_markup: Telegram::Bot::Types::ReplyKeyboardMarkup.new(
+          keyboard: [
+            ['start 🔰']
+          ]
+        )
       )
     end
 
-    def error(errors:)
+    def error(errors = nil)
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: errors.full_messages.join('\n')
+        text: errors&.full_messages&.join('\n') || 'You have not connected this bot'
       )
-    end
-
-    def user
-      @user ||= User.find_by(external_uid: @message.from.id)
     end
   end
 end
