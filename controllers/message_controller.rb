@@ -2,17 +2,37 @@
 
 require_relative 'base_controller'
 Dir['./operations/*.rb'].each { |file| require_relative "../#{file}" }
+Dir['./services/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Controllers
   class MessageController < Controllers::BaseController
+    attr_accessor :check_authenticate
+
+    def initialize(message:, bot:)
+      super
+      @check_authenticate = Services::Authenticate.new(bot: @bot, message: @message)
+    end
+
     def perform
-      case @message.text
-      when '/start'
+      if @check_authenticate.perform(operation: @message.text.split.first)
+        commands_request
+      else
+        @check_authenticate.answer
+      end
+    end
+
+    private
+
+    def commands_request
+      case @message.text.split.first
+      when 'start'
         Operations::Start.new(bot: @bot, message: @message).perform
-      when '/stop'
+      when 'stop'
         Operations::Stop.new(bot: @bot, message: @message).perform
-      when '/random'
+      when 'random'
         Operations::Random.new(bot: @bot, message: @message).perform
+      when 'search'
+        Operations::Search.new(bot: @bot, message: @message).perform
       else
         @bot.api.send_message(
           chat_id: @message.from.id,
