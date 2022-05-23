@@ -111,7 +111,6 @@ Style/StringChars: # new in 1.12
 Style/SwapValues: # new in 1.1
   Enabled: true
 Metrics/MethodLength:
-  Max: 20
-  Enabled: true
+  Enabled: false
 Style/Documentation:
   Enabled: false
