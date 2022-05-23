@@ -3,5 +3,5 @@
 require 'active_record'
 
 class User < ActiveRecord::Base
-  validates :chat_id, uniqueness: { message: 'Bot already connected.' }
+  validates :external_uid, uniqueness: { message: 'Bot already connected.' }
 end
