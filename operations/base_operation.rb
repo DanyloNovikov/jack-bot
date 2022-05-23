@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+Dir['./models/*.rb'].each { |file| require_relative "../#{file}" }
+
 module Operations
   class BaseOperation
-    attr_reader :body, :message
+    attr_reader :body, :message, :current_user
 
     def initialize(bot:, message:)
       @bot = bot
       @message = message
+      @current_user = User.find_by(external_uid: message.from.id)
     end
 
     def perform
