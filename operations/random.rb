@@ -2,6 +2,8 @@
 
 require_relative 'base_operation'
 require 'telegram/bot'
+Dir['./services/*.rb'].each { |file| require_relative "../#{file}" }
+
 
 module Operations
   class Random < Operations::BaseOperation
@@ -19,11 +21,9 @@ module Operations
         chat_id: @message.from.id,
         photo: answer['strDrinkThumb']
       )
-
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: text_for_message(answer: answer),
-        photo: answer['strDrinkThumb'],
+        text: Services::TextHandler.new.text_for_message(answer: answer),
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(
           inline_keyboard: Telegram::Bot::Types::InlineKeyboardButton.new(
             text: 'Give me cocktail',
@@ -49,38 +49,6 @@ module Operations
           'X-RapidAPI-Key' => ENV['RAPID_KEY']
         }
       )
-    end
-
-    def preparation_data(collection:, search:)
-      hash = {}
-      collection.each do |key, value|
-        hash[key] = value if key.include?(search) && !value.nil?
-      end
-      hash
-    end
-
-    def count_ingredients(ingredients:, measures:)
-      ingredients = ingredients.values
-      measures = measures.values
-      hash = {}
-      ingredients.each_with_index do |object, index|
-        hash[object] = measures[index]
-      end
-      hash
-    end
-
-    def text_for_message(answer:)
-      ingredients = count_ingredients(
-        ingredients: preparation_data(collection: answer, search: 'strIngredient'),
-        measures: preparation_data(collection: answer, search: 'strMeasure')
-      )
-      text = "Drink: #{answer['strDrink']}\n" \
-             "**#{answer['strAlcoholic']}**\n" \
-             "Glass: #{answer['strGlass']}\n\n"
-      ingredients.each do |ingredient|
-        text += "#{ingredient.join(' ')}\n"
-      end
-      text += "\nInstruction: #{answer['strInstructions']}\n"
     end
   end
 end
