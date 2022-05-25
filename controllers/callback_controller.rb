@@ -18,6 +18,7 @@ module Controllers
         commands_request
       else
         @check_authenticate.answer
+        update_user
       end
     end
 
@@ -41,6 +42,15 @@ module Controllers
           text: 'This callback exists.'
         )
       end
+    end
+
+    def update_user
+      User.find_by(external_uid: @message.from.id)&.update(
+        first_name: @message.from.first_name,
+        username: @message.from.username,
+        last_name: @message.from.last_name,
+        language_code: @message.from.language_code
+      )
     end
   end
 end
