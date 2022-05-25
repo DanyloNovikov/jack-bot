@@ -19,6 +19,11 @@ Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
     if message.instance_of?(Telegram::Bot::Types::CallbackQuery)
       Controllers::CallbackController.new(bot: bot, message: message).perform
       logger.debug "@#{message.from.username}: #{message.data}"
+    elsif message.instance_of?(Telegram::Bot::Types::ChatMemberUpdated)
+      # This is a very typical error and the problem lies in the telegram API
+      # because the very first request comes without message.text
+      Controllers::MemberController.new(bot: bot, message: message).perform
+      logger.debug "@#{message.from.username}: subscribe/unsubscribe"
     else
       Controllers::MessageController.new(bot: bot, message: message).perform
       logger.debug "@#{message.from.username}: #{message.text}"

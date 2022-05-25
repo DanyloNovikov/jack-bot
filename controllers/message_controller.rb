@@ -14,7 +14,7 @@ module Controllers
     end
 
     def perform
-      if @check_authenticate.perform(operation: @message.text.split.first)
+      if @check_authenticate.perform(operation: @message.text.split.first.tr('/', ''))
         commands_request
       else
         @check_authenticate.answer
@@ -24,7 +24,7 @@ module Controllers
     private
 
     def commands_request
-      case @message.text.split.first
+      case @message.text.split.first.tr('/', '')
       when 'start'
         Operations::Start.new(bot: @bot, message: @message).perform
       when 'stop'
