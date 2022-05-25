@@ -5,7 +5,6 @@ require 'bundler/setup'
 
 require 'pg'
 require 'active_record'
-require 'yaml'
 require 'dotenv/load'
 
 namespace :db do
@@ -17,13 +16,13 @@ namespace :db do
 
   desc 'Create the database'
   task :create do
-    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+    ActiveRecord::Base.establish_connection(ENV['POSTGRESQL'])
     ActiveRecord::Base.connection.create_database(ENV['DATABASE_NAME'])
   end
 
   desc 'Drop the database'
   task :drop do
-    ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+    ActiveRecord::Base.establish_connection(ENV['POSTGRESQL'])
     ActiveRecord::Base.connection.drop_database(ENV['DATABASE_NAME'])
   end
 end
