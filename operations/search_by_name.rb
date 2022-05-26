@@ -29,13 +29,6 @@ module Operations
       )
     end
 
-    def error(errors:)
-      @bot.api.send_message(
-        chat_id: @message.from.id,
-        text: errors.values.join('\n')
-      )
-    end
-
     # I know it's terrible, but it's not the code that's terrible, it's the api.
     def handle_message(message:)
       answer = send_request(message: message)

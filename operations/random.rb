@@ -32,13 +32,6 @@ module Operations
       )
     end
 
-    def error(errors:)
-      @bot.api.send_message(
-        chat_id: @message.from.id,
-        text: errors.values.join('\n')
-      )
-    end
-
     def send_request
       Faraday.get(
         "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/random.php"

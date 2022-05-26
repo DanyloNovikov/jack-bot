@@ -22,8 +22,11 @@ module Operations
       raise 'must be implement'
     end
 
-    def error
-      raise 'must be implement'
+    def error(errors:)
+      @bot.api.send_message(
+        chat_id: @message.from.id,
+        text: errors.values.join('\n')
+      )
     end
   end
 end
