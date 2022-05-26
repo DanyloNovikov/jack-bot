@@ -23,7 +23,7 @@ module Operations
       )
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: Services::TextHandler.new.text_for_message(answer: answer),
+        text: Services::TextHandlerCocktail.new.text_for_message(answer: answer),
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(
           inline_keyboard: Telegram::Bot::Types::InlineKeyboardButton.new(
             text: 'Give me cocktail',

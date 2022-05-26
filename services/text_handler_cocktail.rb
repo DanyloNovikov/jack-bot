@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Services
-  class TextHandler
+  class TextHandlerCocktail
 
     def text_for_message(answer:)
       ingredients = count_ingredients(

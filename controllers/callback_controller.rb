@@ -30,6 +30,8 @@ module Controllers
         Operations::Random.new(bot: @bot, message: @message).perform
       when 'name'
         Operations::Name.new(bot: @bot, message: @message).perform
+      when 'ingredient_name'
+        Operations::IngredientName.new(bot: @bot, message: @message).perform
       when 'category'
         Operations::Category.new(bot: @bot, message: @message).perform
       when 'glass'

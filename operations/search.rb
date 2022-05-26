@@ -15,6 +15,10 @@ module Operations
     def success
       kb = [
         Telegram::Bot::Types::InlineKeyboardButton.new(
+          text: 'Search ingredient by name 🍋',
+          callback_data: 'ingredient_name'
+        ),
+        Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search by name 🍹',
           callback_data: 'name'
         ),
