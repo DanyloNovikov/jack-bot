@@ -48,14 +48,8 @@ module Operations
 
     def send_request(message:)
       Faraday.get(
-        'https://the-cocktail-db.p.rapidapi.com/search.php',
-        {
-          i: message.text
-        },
-        {
-          'X-RapidAPI-Host' => ENV['RAPID_HOST'],
-          'X-RapidAPI-Key' => ENV['RAPID_KEY']
-        }
+        "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/search.php",
+        { i: message.text }
       )
     end
   end

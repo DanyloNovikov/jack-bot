@@ -25,7 +25,7 @@ module Operations
         text: Services::TextHandlerCocktail.new.text_for_message(answer: answer),
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(
           inline_keyboard: Telegram::Bot::Types::InlineKeyboardButton.new(
-            text: 'Give me cocktail',
+            text: 'Give me random cocktail',
             callback_data: 'random'
           )
         )
@@ -41,12 +41,7 @@ module Operations
 
     def send_request
       Faraday.get(
-        'https://the-cocktail-db.p.rapidapi.com/random.php',
-        {},
-        {
-          'X-RapidAPI-Host' => ENV['RAPID_HOST'],
-          'X-RapidAPI-Key' => ENV['RAPID_KEY']
-        }
+        "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/random.php"
       )
     end
   end
