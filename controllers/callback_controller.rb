@@ -28,10 +28,10 @@ module Controllers
       case @message.data
       when 'random'
         Operations::Random.new(bot: @bot, message: @message).perform
-      when 'name'
-        Operations::Name.new(bot: @bot, message: @message).perform
-      when 'ingredient_name'
-        Operations::IngredientName.new(bot: @bot, message: @message).perform
+      when 'search_by_name'
+        Operations::SearchByName.new(bot: @bot, message: @message).perform
+      when 'search_by_ingredient_name'
+        Operations::SearchByIngredientName.new(bot: @bot, message: @message).perform
       when 'category'
         Operations::Category.new(bot: @bot, message: @message).perform
       when 'glass'

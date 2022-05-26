@@ -2,14 +2,15 @@
 
 require_relative 'base_operation'
 require 'telegram/bot'
+
 Dir['./models/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Operations
-  class Name < Operations::BaseOperation
+  class SearchByIngredientName < Operations::BaseOperation
     def perform
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: 'Enter the name of what you are looking for. example(oasis):'
+        text: 'Enter the name of what you are looking for. example(vodka):'
       )
       @bot.listen do |message|
         return handle_message(message: message)
@@ -19,13 +20,9 @@ module Operations
     private
 
     def success(answer:)
-      @bot.api.sendPhoto(
-        chat_id: @message.from.id,
-        photo: answer['strDrinkThumb']
-      )
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: Services::TextHandlerCocktail.new.text_for_message(answer: answer)
+        text: Services::TextHandlerIngredient.new.text_for_message(answer: answer)
       )
     end
 
@@ -40,17 +37,19 @@ module Operations
     def handle_message(message:)
       answer = send_request(message: message)
 
-      return success(answer: JSON.parse(answer.body)['drinks'].first) unless JSON.parse(answer.body)['drinks'].nil?
+      if answer.success? && !JSON.parse(answer.body)['ingredients'].nil?
+        return success(answer: JSON.parse(answer.body)['ingredients'].first)
+      end
 
-      error(errors: { errors: ['Found nothing...'] })
+      return error(errors: JSON.parse(answer.body)['errors'].first) unless JSON.parse(answer.body)['errors'].nil?
+
+      error(errors: { errors: 'Nothing found...' })
     end
 
     def send_request(message:)
       Faraday.get(
         "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/search.php",
-        {
-          s: message.text.tr(' ', '_').downcase
-        }
+        { i: message.text }
       )
     end
   end

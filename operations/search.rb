@@ -16,11 +16,11 @@ module Operations
       kb = [
         Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search ingredient by name 🍋',
-          callback_data: 'ingredient_name'
+          callback_data: 'search_by_ingredient_name'
         ),
         Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search by name 🍹',
-          callback_data: 'name'
+          callback_data: 'search_by_name'
         ),
         Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search by category 🗄',
