@@ -2,6 +2,7 @@
 
 require_relative 'base_controller'
 Dir['./operations/*.rb'].each { |file| require_relative "../#{file}" }
+Dir['./operations/search_by/*.rb'].each { |file| require_relative "../#{file}" }
 Dir['./services/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Controllers
@@ -29,11 +30,11 @@ module Controllers
       when 'random'
         Operations::Random.new(bot: @bot, message: @message).perform
       when 'search_by_name'
-        Operations::SearchByName.new(bot: @bot, message: @message).perform
+        Operations::SearchBy::Name.new(bot: @bot, message: @message).perform
       when 'search_by_ingredient_name'
-        Operations::SearchByIngredientName.new(bot: @bot, message: @message).perform
+        Operations::SearchBy::IngredientName.new(bot: @bot, message: @message).perform
       when 'search_by_ingredients'
-        Operations::SearchByIngredients.new(bot: @bot, message: @message).perform
+        Operations::SearchBy::Ingredients.new(bot: @bot, message: @message).perform
       else
         @bot.api.send_message(
           chat_id: @message.from.id,

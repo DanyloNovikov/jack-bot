@@ -2,6 +2,8 @@
 
 require_relative 'base_operation'
 require 'telegram/bot'
+require 'dotenv/load'
+
 Dir['./services/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Operations

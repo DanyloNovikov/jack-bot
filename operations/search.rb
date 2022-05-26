@@ -29,7 +29,7 @@ module Operations
       ]
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: 'Select which attributes to search for.',
+        text: 'Select which attributes to search_by for.',
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
       )
     end
