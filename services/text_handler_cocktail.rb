@@ -2,7 +2,6 @@
 
 module Services
   class TextHandlerCocktail
-
     def text_for_message(answer:)
       ingredients = count_ingredients(
         ingredients: preparation_data(collection: answer, search: 'strIngredient'),

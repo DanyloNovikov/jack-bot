@@ -4,7 +4,6 @@ require_relative 'base_operation'
 require 'telegram/bot'
 Dir['./services/*.rb'].each { |file| require_relative "../#{file}" }
 
-
 module Operations
   class Random < Operations::BaseOperation
     def perform
