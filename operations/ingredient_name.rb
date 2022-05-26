@@ -43,7 +43,7 @@ module Operations
 
       return error(errors: JSON.parse(answer.body)['errors'].first) unless JSON.parse(answer.body)['errors'].nil?
 
-      error(errors: { errors: 'Nothing found...' } )
+      error(errors: { errors: 'Nothing found...' })
     end
 
     def send_request(message:)
