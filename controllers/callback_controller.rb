@@ -32,10 +32,6 @@ module Controllers
         Operations::SearchByName.new(bot: @bot, message: @message).perform
       when 'search_by_ingredient_name'
         Operations::SearchByIngredientName.new(bot: @bot, message: @message).perform
-      when 'category'
-        Operations::Category.new(bot: @bot, message: @message).perform
-      when 'glass'
-        Operations::Glass.new(bot: @bot, message: @message).perform
       when 'search_by_ingredients'
         Operations::SearchByIngredients.new(bot: @bot, message: @message).perform
       else

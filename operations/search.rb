@@ -23,14 +23,6 @@ module Operations
           callback_data: 'search_by_name'
         ),
         Telegram::Bot::Types::InlineKeyboardButton.new(
-          text: 'Search by category 🗄',
-          callback_data: 'category'
-        ),
-        Telegram::Bot::Types::InlineKeyboardButton.new(
-          text: 'Search by glass 🍸',
-          callback_data: 'glass'
-        ),
-        Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search by ingredients 🧺',
           callback_data: 'search_by_ingredients'
         )
