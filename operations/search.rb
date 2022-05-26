@@ -32,7 +32,7 @@ module Operations
         ),
         Telegram::Bot::Types::InlineKeyboardButton.new(
           text: 'Search by ingredients 🧺',
-          callback_data: 'ingredients'
+          callback_data: 'search_by_ingredients'
         )
       ]
       @bot.api.send_message(

@@ -36,8 +36,8 @@ module Controllers
         Operations::Category.new(bot: @bot, message: @message).perform
       when 'glass'
         Operations::Glass.new(bot: @bot, message: @message).perform
-      when 'ingredients'
-        Operations::Ingredients.new(bot: @bot, message: @message).perform
+      when 'search_by_ingredients'
+        Operations::SearchByIngredients.new(bot: @bot, message: @message).perform
       else
         @bot.api.send_message(
           chat_id: @message.from.id,
