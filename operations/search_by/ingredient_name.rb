@@ -28,6 +28,8 @@ module Operations
 
       # I know it's terrible, but it's not the code that's terrible, it's the api.
       def handle_message(message:)
+        return error(errors: { errors: ['Empty text for search'] }) unless message.methods.include?(:text)
+
         answer = send_request(message: message)
 
         if answer.success? && !JSON.parse(answer.body)['ingredients'].nil?
