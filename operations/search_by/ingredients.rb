@@ -37,7 +37,6 @@ module Operations
 
         answer = send_request(message: message)
 
-
         return success(answer: JSON.parse(answer.body)['drinks'].first) unless JSON.parse(answer.body)['drinks'].nil?
 
         error(errors: { errors: ['Found nothing...'] })

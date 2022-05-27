@@ -2,17 +2,18 @@
 
 require_relative 'base_operation'
 require 'telegram/bot'
+
 Dir['./models/*.rb'].each { |file| require_relative "../#{file}" }
 
 module Operations
   class Start < Operations::BaseOperation
     def perform
       user = User.new(
-        external_uid: @message.from&.id,
-        first_name: @message.from&.first_name,
-        username: @message.from&.username,
-        last_name: @message.from&.last_name,
-        language_code: @message.from&.language_code
+        external_uid: @message.from&.id || '',
+        first_name: @message.from&.first_name || '',
+        username: @message.from&.username || '',
+        last_name: @message.from&.last_name || '',
+        language_code: @message.from&.language_code || ''
       )
       return success if user.save
 
