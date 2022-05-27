@@ -36,6 +36,8 @@ module Controllers
         Operations::Search.new(bot: @bot, message: @message).perform
       when 'help'
         Operations::Help.new(bot: @bot, message: @message).perform
+      when 'support'
+        Operations::Support.new(bot: @bot, message: @message).perform
       else
         @bot.api.send_message(
           chat_id: @message.from.id,
