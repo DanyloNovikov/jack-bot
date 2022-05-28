@@ -15,10 +15,10 @@ module Controllers
 
     def perform
       if @check_authenticate.perform(operation: @message.text.split.first.tr('/', ''))
+        update_user
         commands_request
       else
         @check_authenticate.answer
-        update_user
       end
     end
 

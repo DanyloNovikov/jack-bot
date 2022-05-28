@@ -16,6 +16,7 @@ module Controllers
 
     def perform
       if @check_authenticate.perform(operation: @message.data.split.first)
+        update_user
         commands_request
       else
         @check_authenticate.answer
