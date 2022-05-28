@@ -17,23 +17,26 @@ Telegram bot for search alcohol drink and cocktail.
 1. Run bundler:
 
 
-    bundle
+        bundle
 
 2. Add your env:
 
 
-    cp .env.example .env
+        cp .env.example .env
+
 
 3. Run rake task:
 
 
-    rake db:create
-    rake db:migrate
+        rake db:create
+        rake db:migrate
+
 
 4. Run bot:
 
 
-    bin/bot
+        bin/bot
+
 
 ---
 
