@@ -48,3 +48,4 @@ Telegram bot for search alcohol drink and cocktail.
     
     TELEGRAM_TOKEN=00000000:sasasasasasasasasasasasasasa-V_EG
     COCKTAILS_KEY=1
+    COCKTAILS_VERSION=v1

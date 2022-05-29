@@ -2,7 +2,6 @@
 
 require_relative '../base_operation'
 require 'telegram/bot'
-
 Dir['./models/*.rb'].each { |file| require_relative "../../#{file}" }
 
 module Operations
@@ -21,13 +20,18 @@ module Operations
       private
 
       def success(answer:)
-        @bot.api.sendPhoto(
-          chat_id: @message.from.id,
-          photo: answer['strDrinkThumb']
-        )
+        imo = %w[🍷 🍸 🥃 🍹 🧊 🍋 🧉 🍾]
+        kb = []
+        answer.each do |cocktail|
+          kb << Telegram::Bot::Types::InlineKeyboardButton.new(
+            text: cocktail['strDrink'] + imo.sample,
+            callback_data: "search_by_cocktail_id #{cocktail['idDrink']}"
+          )
+        end
         @bot.api.send_message(
           chat_id: @message.from.id,
-          text: Services::TextHandlerCocktail.new.text_for_message(answer: answer)
+          text: 'That is all i could find',
+          reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
         )
       end
 
@@ -35,9 +39,9 @@ module Operations
       def handle_message(message:)
         return error(errors: { errors: ['Empty text for search'] }) unless message.methods.include?(:text)
 
-        answer = send_request(message: message)
+        answer = JSON.parse(send_request(message: message).body)['drinks']
 
-        return success(answer: JSON.parse(answer.body)['drinks'].first) unless JSON.parse(answer.body)['drinks'].nil?
+        return success(answer: answer) if !answer.nil? && answer != 'None Found'
 
         error(errors: { errors: ['Found nothing...'] })
       end
@@ -47,7 +51,7 @@ module Operations
           "https://www.thecocktaildb.com/api/json/#{ENV.fetch('COCKTAILS_VERSION',
                                                               nil)}/#{ENV.fetch('COCKTAILS_KEY', nil)}/filter.php",
           {
-            i: message.text.tr(' ', '_')
+            i: message.text.tr(' ', '_').downcase
           }
         )
       end

@@ -27,7 +27,7 @@ module Controllers
     private
 
     def commands_request
-      case @message.data
+      case @message.data.split.first
       when 'random'
         Operations::Random.new(bot: @bot, message: @message).perform
       when 'search_by_name'
@@ -36,6 +36,8 @@ module Controllers
         Operations::SearchBy::IngredientName.new(bot: @bot, message: @message).perform
       when 'search_by_ingredients'
         Operations::SearchBy::Ingredients.new(bot: @bot, message: @message).perform
+      when 'search_by_cocktail_id'
+        Operations::SearchBy::CocktailId.new(bot: @bot, message: @message).perform
       else
         @bot.api.send_message(
           chat_id: @message.from.id,
