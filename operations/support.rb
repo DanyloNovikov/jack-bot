@@ -15,7 +15,9 @@ module Operations
     def success
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: "We do not want to insert advertising as it will cause you discomfort, but we need at least some funds to maintain this service, and so this serves us as a motivation for further development of the service, we rely only on your support 🥺\n\n
+        text: "We do not want to insert advertising as it will cause you discomfort, but we need at least some funds to
+maintain this service, and so this serves us as a motivation for further development of the service, we rely only on
+your support 🥺\n\n
 Check our Patreon. We will post more bots!
 Patreon: https://www.patreon.com/join/jack_bot/checkout?ru=undefined\n
 Bitcoin: 1CAXJxaEzPWvPN2vwVr6SZaVVPvZs2SAo6\n

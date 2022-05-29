@@ -116,3 +116,10 @@ Style/Documentation:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
+Metrics/CyclomaticComplexity:
+  Max: 12
+  Enabled: true
+Metrics/PerceivedComplexity:
+  Max: 12
+  Enabled: true
+

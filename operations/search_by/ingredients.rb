@@ -44,9 +44,10 @@ module Operations
 
       def send_request(message:)
         Faraday.get(
-          "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/search.php",
+          "https://www.thecocktaildb.com/api/json/#{ENV.fetch('COCKTAILS_VERSION',
+                                                              nil)}/#{ENV.fetch('COCKTAILS_KEY', nil)}/filter.php",
           {
-            i: message.text.tr(' ', '_').downcase
+            i: message.text.tr(' ', '_')
           }
         )
       end

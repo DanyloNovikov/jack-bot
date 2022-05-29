@@ -13,7 +13,7 @@ Dir['./controllers/*.rb'].each { |file| require_relative "../#{file}" }
 logger = config.logger
 logger.debug 'Starting telegram bot'
 
-Telegram::Bot::Client.run(ENV['TELEGRAM_TOKEN']) do |bot|
+Telegram::Bot::Client.run(ENV.fetch('TELEGRAM_TOKEN', nil)) do |bot|
   bot.logger.info('Bot has been started')
   bot.listen do |message|
     if message.instance_of?(Telegram::Bot::Types::CallbackQuery)

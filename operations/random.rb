@@ -36,7 +36,8 @@ module Operations
 
     def send_request
       Faraday.get(
-        "https://www.thecocktaildb.com/api/json/v1/#{ENV['COCKTAILS_KEY']}/random.php"
+        "https://www.thecocktaildb.com/api/json/#{ENV.fetch('COCKTAILS_VERSION',
+                                                            nil)}/#{ENV.fetch('COCKTAILS_KEY', nil)}/random.php"
       )
     end
   end

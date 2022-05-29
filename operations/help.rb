@@ -14,7 +14,8 @@ module Operations
     def success
       @bot.api.send_message(
         chat_id: @message.from.id,
-        text: "search - the command is responsible for searching by various attributes such as ingredients, name as well as searching for the description of ingredients simply select search in the context menu or enter search.\n
+        text: "search - the command is responsible for searching by various attributes such as ingredients, name as well
+ as searching for the description of ingredients simply select search in the context menu or enter search.\n
 random - this command returns a random cocktail\n
 help - get instruction how use this bot\n
 support - to provide financial assistance to our project\n\n

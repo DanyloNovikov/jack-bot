@@ -7,7 +7,7 @@ class DatabaseConnector
   class << self
     def establish_connection
       ActiveRecord::Base.logger = Logger.new(active_record_logger_path)
-      ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+      ActiveRecord::Base.establish_connection(ENV.fetch('DATABASE_URL', nil))
     end
 
     private
