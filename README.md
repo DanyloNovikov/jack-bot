@@ -1,6 +1,6 @@
 # Jack bot (boilerplate for [telegram-bot-ruby](https://github.com/atipugin/telegram-bot-ruby))
 
-Telegram bot for search alcohol drink and cocktail. An example with comfortable scaling and the ability to connect to the postgresql database through the ActiveRecord library.
+Telegram bot for searching for alcoholic drinks and cocktails. Example with convenient scaling and ability to connect to postgresql database via ActiveRecord library in the future it is planned to change the default ORM to a faster one. 
 
 ---
 
@@ -53,7 +53,7 @@ Telegram bot for search alcohol drink and cocktail. An example with comfortable 
 ---
 ## How to use
 
-It all starts with the bin/bot. Client from the telegram-bot-ruby library, it starts listening for messages, all messages that arrive in our application. This is a very important point because as you can see in the example there are 3 main types of messages.
+It all starts with bin/bot. Client from the telegram-bot-ruby library, it starts listening to messages, all messages that come into our application. This is a very important point because, as you can see in the example, there are 3 main types of messages.
 
 ```ruby
 bot.listen do |message|
@@ -73,9 +73,10 @@ end
 ```
 ---
 ### Controllers
-The main difference between the **сallback_controller** and the **message_controller** is that in regular messages we receive text in the body of the message - this is what we get when the user enters some text, and callback messages give us data - since sending is not via chat.
+The main difference between the **сallback_controller** and the **message_controller** is that in regular messages we receive 'text' in the body of the message - this is what we get when the user enters some text, and callback messages give us 'data' - since sending is not via chat.
 
-And we also have messages with the **ChatMemberUpdated** type - this is a special type of message in which it can only occur 2 times from 1 user, this is when he presses / start and if he wants to unsubscribe from the bot and delete it, we will catch messages with the type **ChatMemberUpdated**.
+We also have messages with type **ChatMemberUpdated** - this is a special type of message in which it can occur only 2 times from 1 user, this is when he presses / start and if he wants to unsubscribe from the bot and delete it, we will catch messages with type **ChatMemberUpdated**.
+
 ```ruby
 class MessageController < Controllers::BaseController
   attr_accessor :check_authenticate
@@ -120,12 +121,13 @@ class MessageController < Controllers::BaseController
 end
 ```
 
-In our controller there is 1 main method, this is perform and is intended for certain validations at the controller level or a kind of before action, as in rails in perform, depending on the command that users enter or what data arrived from the callback, the bot will perform the operation.
+There is 1 main method in our controller, it is perform and it is designed for certain validations at controller level or a kind of before action as in rails, depending on the command that the user enters or what data came from the callback, the bot will perform the operation.
 
 ---
 ### Operations
 
-The contain operations are responsible for the behavior of the bot and give a response depending on the command for example, we received the /random messages, the controller will determine the command and start the Random operation.
+The contain operations are responsible for the bot's behavior and give a response depending on the command, for example, we received the message /random, the controller will detect the command and run the Random operation.
+
 ```ruby
 class Random < Operations::BaseOperation
   def perform
@@ -163,4 +165,4 @@ class Random < Operations::BaseOperation
 end
 ```
 
-Send a request to api if it is successful, return success or error (defined in base_operations)
+Send a request to API if it is successful, return success or error (defined in base_operations).
